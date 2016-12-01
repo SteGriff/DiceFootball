@@ -73,6 +73,8 @@ namespace DiceFootball
                         otherTeam.Role = TeamRole.Receiving;
                         Commentary.CommentForTeams(activeTeam, otherTeam);
                         int kickYards = DiceThrow.KickYards(messages);
+                        //Move the ball
+                        PrintMessages(messages);
                         NextTeam();
                         phase = Phase.Drive;
                         break;
@@ -81,10 +83,22 @@ namespace DiceFootball
                         activeTeam.Role = TeamRole.Offense;
                         otherTeam.Role = TeamRole.Defense;
                         Commentary.CommentForTeams(activeTeam, otherTeam);
+                        activeTeam.SetOffenseStrategy();
+                        otherTeam.SetDefenceGuess();
+                        //Do defence effects
+                        //Move ball
                         break;
                 }
             }
+            
+        }
 
+        private void PrintMessages(List<string> messages)
+        {
+            foreach(var m in messages)
+            {
+                Console.WriteLine(m);
+            }
         }
 
         private void NextTeam()
